@@ -619,9 +619,8 @@ jobs:
             echo "FULL_VERSION=$FULL_VERSION" >> $GITHUB_ENV
             export FULL_VERSION=$FULL_VERSION
           fi
-          #TIME="$(TZ='Asia/Shanghai' date +'%y%m%d%H%M%S')"
-          #TIME_FORM="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
-          TIME=TIME_FORM="Wed Sep 10 04:11:41 UTC 2025"
+          TIME="$(TZ='Asia/Shanghai' date +'%y%m%d%H%M%S')"
+          TIME_FORM="$(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S')"
           echo "TIME=$TIME" >> $GITHUB_ENV
           echo "TIME_FORM=$TIME_FORM" >> $GITHUB_ENV
           TAG_HEAD="OPPO+OPlus+Realme-A15-build"
