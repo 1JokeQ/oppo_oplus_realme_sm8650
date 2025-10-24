@@ -358,6 +358,17 @@ for f in ./common/scripts/setlocalversion; do
   sed -i "\$s|echo \"\\\$res\"|echo \"-${CUSTOM_SUFFIX}\"|" "$f"
 done
 
+# 自定义内核构建时间（#1 SMP后的时间戳）
+echo ">>> 自定义内核构建时间..."
+# 定义目标构建时间
+CUSTOM_BUILD_TIME="Mon Sep 22 02:09:55 UTC 2025"
+
+# 修改Makefile中的核心构建时间变量
+sed -i "s/^BUILD_TIMESTAMP :=.*/BUILD_TIMESTAMP := \"${CUSTOM_BUILD_TIME}\"/" common/Makefile || error "修改Makefile失败"
+
+# 修改setlocalversion中SMP后的时间戳
+sed -i "s/\(.*SMP.*\) [A-Za-z0-9: ]*/\1 ${CUSTOM_BUILD_TIME}/" ./common/scripts/setlocalversion || error "修改setlocalversion失败"
+
 # ===== 编译内核 =====
 echo ">>> 开始编译内核..."
 cd common
