@@ -155,6 +155,11 @@ else
     patch -p1 -N -F 3 < syscall_hooks.patch || true
   fi
   patch -p1 -N -F 3 < 69_hide_stuff.patch || true
+  #为KernelSU Next添加WildKSU管理器支持
+  cd ./drivers/kernelsu
+  wget https://github.com/WildKernels/kernel_patches/raw/refs/heads/main/next/susfs_fix_patches/v1.5.12/fix_apk_sign.c.patch
+  patch -p2 -N -F 3 < fix_apk_sign.c.patch || true
+  cd ../../
 fi
 cd ../
 
@@ -320,7 +325,7 @@ if [[ "$APPLY_BBG" == "y" || "$APPLY_BBG" == "Y" ]]; then
   unzip -q master.zip
   mv "Baseband-guard-master" baseband-guard
   printf '\nobj-$(CONFIG_BBG) += baseband-guard/\n' >> ./Makefile
-  sed -i '/^config LSM$/,/^help$/{ /^[[:space:]]*default/ { /baseband_guard/! s/landlock/landlock,baseband_guard/ } }' ./Kconfig
+  sed -i '/^config LSM$/,/^help$/{ /^[[:space:]]*default/ { /baseband_guard/! s/lockdown/lockdown,baseband_guard/ } }' ./Kconfig
   awk '
   /endmenu/ { last_endmenu_line = NR }
   { lines[NR] = $0 }
